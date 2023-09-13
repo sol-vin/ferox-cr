@@ -3,7 +3,7 @@ Copy-Item -Path "ferox/include" -Destination "rsrc/include" -Recurse -Force
 Copy-Item -Path "ferox/src" -Destination "rsrc/src" -Recurse -Force 
 Remove-Item -Path "ferox" -Recurse -Force
 
-cl -EHsc -I rsrc\include rsrc\ferox.c
+cl /c /Irsrc/include /Irsrc/src rsrc\ferox.c
 lib ferox.obj
 
 $ErrorActionPreference= 'silentlycontinue'
