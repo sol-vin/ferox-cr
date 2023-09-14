@@ -1,5 +1,5 @@
 @[Link("ferox")]
-lib LibFerox
+lib Ferox
   GEOMETRY_MAX_VERTEX_COUNT = 8
   WORLD_DEFAULT_GRAVITY = Vector2.new(x: 0.0_f32, y: 9.8_f32)
 
