@@ -1,0 +1,10 @@
+version: 2.0
+shards:
+  ferox-cr:
+    path: ../../
+    version: 0.1.0
+
+  raylib-cr:
+    git: https://github.com/sol-vin/raylib-cr.git
+    version: 4.6+git.commit.e9893b367aca7b500c5743bdd942149129aba902
+

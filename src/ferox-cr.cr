@@ -8,7 +8,7 @@ lib Ferox
   WORLD_ITERATION_COUNT = 10
   WORLD_MAX_OBJECT_COUNT = 4096
 
-  {% if @top_level.has_const? Raylib %}
+  {% if @top_level.has_constant? :Raylib %}
     alias AABB = Raylib::Rectangle
     alias Vector2  = Raylib::Vector2
     alias Color = Raylib::Color
@@ -140,7 +140,7 @@ lib Ferox
 
   # Collision
   fun compute_collision  = frComputeCollision(s1 : Shape*, tx1 : Transform, s2 : Shape*, tx2 : Transform, collision : Collision*) : Bool
-  fun compute_raycast = frComputeRaycast(body : Body*. ray : Ray, raycast_hit : RaycastHit*)
+  fun compute_raycast = frComputeRaycast(body : Body*, ray : Ray, raycast_hit : RaycastHit*)
 
   # Geometry
   fun create_circle = frCreateCircle(material : Material, radius : LibC::Float) : Shape*
@@ -158,12 +158,12 @@ lib Ferox
   fun get_shape_aabb = frGetShapeAABB(s : Shape*, tx : Transform) : AABB
   fun get_circle_radius = frGetCircleRadius(s : Shape*) : LibC::Float
   fun get_polygon_vertex = frGetPolygonVertex(s : Shape*, index : LibC::Int) : Vector2
-  fun get_polygon_vertices = frGetPolygonVertices(s : Shape*, index : LibC::Int) : Vertices*
+  fun get_polygon_vertices = frGetPolygonVertices(s : Shape*) : Vertices*
   fun get_polygon_normal = frGetPolygonNormal(s : Shape*, index : LibC::Int) : Vector2
   fun get_polygon_normals = frGetPolygonNormals(s : Shape*) : Vertices*
   fun set_shape_type = frSetShapeType(s : Shape*, type : ShapeType)
   fun set_shape_material = frSetShapeMaterial(s : Shape*, material : Material)
-  fun set_shape_density = frSetShapeMaterial(s : Shape*, density : LibC::Float)
+  fun set_shape_density = frSetShapeDensity(s : Shape*, density : LibC::Float)
   fun set_shape_friction = frSetShapeFriction(s : Shape*, friction : LibC::Float)
   fun set_shape_restitution = frSetShapeRestitution(s : Shape*, restitution : LibC::Float)
   fun set_circle_radius = frSetCircleRadius(s : Shape*, radius : LibC::Float)
@@ -199,12 +199,12 @@ lib Ferox
   fun set_body_user_data = frSetBodyUserData(b : Body*, data : Void*)
   fun clear_body_forces = frClearBodyForces(b : Body*)
   fun apply_force_to_body = frApplyForceToBody(b : Body*, point : Vector2, force : Vector2)
-  fun apply_gravity_to_body = frApplyForceToBody(b : Body*, g : Vector2)
+  fun apply_gravity_to_body = frApplyGravityToBody(b : Body*, g : Vector2)
   fun apply_impulse_to_body = frApplyForceToBody(b : Body*, point : Vector2, impulse : Vector2)
-  fun apply_accumulated_impulses = frApplyAccumulatedImpulses(b1 : Body*. b2 : Body*, ctx : Collision*)
+  fun apply_accumulated_impulses = frApplyAccumulatedImpulses(b1 : Body*, b2 : Body*, ctx : Collision*)
   fun integrate_for_body_velocity = frIntegrateForBodyVelocity(b : Body*, dt : LibC::Float)
   fun integrate_for_body_position = frIntegrateForBodyPosition(b : Body*, dt : LibC::Float)
-  fun resolve_collision = frResolveCollision(b1 : Body*. b2 : Body*, ctx : Collision*, inverse_dt : LibC::Float)
+  fun resolve_collision = frResolveCollision(b1 : Body*, b2 : Body*, ctx : Collision*, inverse_dt : LibC::Float)
   fun get_current_time = frGetCurrentTime() : LibC::Double
 
   # World
@@ -223,26 +223,26 @@ lib Ferox
   fun computer_raycast_for_world = frComputeRaycastForWorld(world : World*, ray : Ray, func : RaycastQueryFunc)
 
   # Inline
-  fun vec2_add = frVec2Add(v1 : Vector2, v2 : Vector2) : Vector2
-  fun vec2_subtract = frVec2Subtract(v1 : Vector2, v2 : Vector2) : Vector2
-  fun vec2_negate = frVec2Negate(v : Vector2) : Vector2
-  fun vec2_scalar_multiply = frVec2ScalarMultiply(v1 : Vector2, value : LibC::Float) : Vector2
-  fun vec2_dot = frVec2Dot(v1 : Vector2, v2 : Vector2) : LibC::Float
-  fun vec2_cross = frVec2Cross(v1 : Vector2, v2 : Vector2) : LibC::Float
-  fun vec2_magnitude_sqr = frVec2MagnitudeSqr(v : Vector2) : LibC::Float
-  fun vec2_magnitude = frVec2Magnitude(v : Vector2) : LibC::Float
+  fun vec2_add = frVector2Add(v1 : Vector2, v2 : Vector2) : Vector2
+  fun vec2_subtract = frVector2Subtract(v1 : Vector2, v2 : Vector2) : Vector2
+  fun vec2_negate = frVector2Negate(v : Vector2) : Vector2
+  fun vec2_scalar_multiply = frVector2ScalarMultiply(v1 : Vector2, value : LibC::Float) : Vector2
+  fun vec2_dot = frVector2Dot(v1 : Vector2, v2 : Vector2) : LibC::Float
+  fun vec2_cross = frVector2Cross(v1 : Vector2, v2 : Vector2) : LibC::Float
+  fun vec2_magnitude_sqr = frVector2MagnitudeSqr(v : Vector2) : LibC::Float
+  fun vec2_magnitude = frVector2Magnitude(v : Vector2) : LibC::Float
   fun vec2_distance_sqr = frVector2DistanceSqr(v1 : Vector2, v2 : Vector2) : LibC::Float
   fun vec2_distance = frVector2Distance(v1 : Vector2, v2 : Vector2)  : LibC::Float
-  fun vec2_normalize = frVec2Normalize(v : Vector2) : Vector2
-  fun vec2_left_normal = frVec2LeftNormal(v : Vector2) : Vector2
-  fun vec2_right_normal = frVec2RightNormal(v : Vector2) : Vector2
-  fun vec2_rotate = frVec2Rotate(v : Vector2, angle : LibC::Float) : Vector2
-  fun vec2_rotate_tx = frVec2RotateTx(v : Vector2, tx : Transform) : Vector2
-  fun vec2_transform = frVec2Transform(v : Vector2, tx : Transform) : Vector2
-  fun vec2_angle = frVec2Angle(v1 : Vector2, v2 : Vector2) : LibC::Float
-  fun vec2_ccw = frVec2CCW(v1 : Vector2, v2 : Vector2, v3 : Vector2) : Bool
-  fun vec2_pixels_to_units = frVec2PixelsToUnits(v : Vector2) : Vector2
-  fun vec2_units_to_pixels = frVec2MetersToUnits(v : Vector2) : Vector2
+  fun vec2_normalize = frVector2Normalize(v : Vector2) : Vector2
+  fun vec2_left_normal = frVector2LeftNormal(v : Vector2) : Vector2
+  fun vec2_right_normal = frVector2RightNormal(v : Vector2) : Vector2
+  fun vec2_rotate = frVector2Rotate(v : Vector2, angle : LibC::Float) : Vector2
+  fun vec2_rotate_tx = frVector2RotateTx(v : Vector2, tx : Transform) : Vector2
+  fun vec2_transform = frVector2Transform(v : Vector2, tx : Transform) : Vector2
+  fun vec2_angle = frVector2Angle(v1 : Vector2, v2 : Vector2) : LibC::Float
+  fun vec2_ccw = frVector2CCW(v1 : Vector2, v2 : Vector2, v3 : Vector2) : Bool
+  fun vec2_pixels_to_units = frVector2PixelsToUnits(v : Vector2) : Vector2
+  fun vec2_units_to_pixels = frVector2UnitsToPixels(v : Vector2) : Vector2
   fun pixels_to_units = frPixelsToUnits(value : LibC::Float) : LibC::Float
   fun units_to_pixels = frUnitsToPixels(value : LibC::Float) : LibC::Float
 
@@ -284,6 +284,28 @@ lib Ferox
   fun get_support_point_index = frGetSupportPointIndex(vertices : Vertices*, tx : Transform, v : Vector2) : LibC::Int
   
   # geometry.c
+
+  struct Circle
+    radius : LibC::Float
+  end
+
+  struct Polygon
+    vertices : Vertices
+    normals : Vertices
+  end
+
+  union ShapeData
+    circle : Circle
+    polygon : Polygon
+  end
+
+  struct Shape
+    type : ShapeType
+    material : Material
+    area : LibC::Float
+    data : ShapeData
+  end
+
   fun jarvis_march = frJarvisMarch(input : Vertices*, output : Vertices*)
 
   # rigid-body.c
@@ -320,7 +342,7 @@ lib Ferox
   struct World
     gravity : Vector2
     bodies : Body**
-    hash : SpacialHash*
+    hash : SpatialHash*
     cache : ContactCacheEntry*
     handler : CollisionHandler
     accumulator : LibC::Float

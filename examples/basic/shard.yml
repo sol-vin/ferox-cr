@@ -1,0 +1,19 @@
+name: basic
+version: 0.1.0
+
+authors:
+  - Ian Rash <redcodefinal@gmail.com>
+
+targets:
+  basic:
+    main: src/basic.cr
+
+dependencies:
+  raylib-cr:
+    github: sol-vin/raylib-cr
+  ferox-cr:
+    path: ../../
+
+crystal: 1.9.2
+
+license: MIT
