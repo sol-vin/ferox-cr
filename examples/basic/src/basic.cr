@@ -1,6 +1,6 @@
-# require "raylib-cr"
+require "raylib-cr"
 require "ferox-cr"
-# alias R = Raylib
+alias R = Raylib
 alias F = Ferox
 
 
@@ -128,14 +128,15 @@ puts F.vec2_cross(F::Vector2.new, F::Vector2.new)
 puts F.vec2_dot(F::Vector2.new, F::Vector2.new)
 puts F.vec2_magnitude_sqr(F::Vector2.new)
 puts F.vec2_magnitude(F::Vector2.new)
-puts F.vec2_angle(F::Vector2.new, F::Vector2.new)
 puts F.vec2_normalize(F::Vector2.new)
 puts F.vec2_left_normal(F::Vector2.new)
 puts F.vec2_right_normal(F::Vector2.new)
 puts F.vec2_rotate(F::Vector2.new, 3.0_f32)
 puts F.vec2_rotate_tx(F::Vector2.new, F::Transform.new)
 puts F.vec2_transform(F::Vector2.new, F::Transform.new)
-puts F.vec2_ccw(F::Vector2.new,F::Vector2.new,F::Vector2.new)
+puts F.vec2_counter_clockwise(F::Vector2.new,F::Vector2.new,F::Vector2.new)
+
+puts F.vec2_angle(F::Vector2.new, F::Vector2.new)
 puts F.vec2_units_to_pixels(F::Vector2.new)
 puts F.vec2_pixels_to_units(F::Vector2.new)
 puts F.units_to_pixels(10)
