@@ -61,65 +61,66 @@ module Basic
       CELL_SIZE
     )
 
-    ground = F.create_body_from_shape(
-      F::BodyType::Static,
-      F::Broken.vec2_pixels_to_units(
-        R::Vector2.new(
-          x: 0.5_f32 * SCREEN_WIDTH,
-          y: 0.85_f32 * SCREEN_HEIGHT
-        )
-      ),
-      F.create_rectangle(
-        F::Material.new(
-          density: 1.25_f32,
-          friction: 0.5_f32
-        ),
-        F::Broken.pixels_to_units(0.75_f32 * SCREEN_WIDTH),
-        F::Broken.pixels_to_units(0.1_f32 * SCREEN_HEIGHT)
-      )
-    )
+    # ground = F.create_body_from_shape(
+    #   F::BodyType::Static,
+    #   F::Broken.vec2_pixels_to_units(
+    #     R::Vector2.new(
+    #       x: 0.5_f32 * SCREEN_WIDTH,
+    #       y: 0.85_f32 * SCREEN_HEIGHT
+    #     )
+    #   ),
+    #   F.create_rectangle(
+    #     F::Material.new(
+    #       density: 1.25_f32,
+    #       friction: 0.5_f32
+    #     ),
+    #     F::Broken.pixels_to_units(0.75_f32 * SCREEN_WIDTH),
+    #     F::Broken.pixels_to_units(0.1_f32 * SCREEN_HEIGHT)
+    #   )
+    # )
     
 
-    F.add_body_to_world(world, ground)
+    # F.add_body_to_world(world, ground)
 
-    box = F.create_body_from_shape(
-      F::BodyType::Dynamic,
-      F::Broken.vec2_pixels_to_units(
-        R::Vector2.new(
-          x: 0.5_f32 * SCREEN_WIDTH,
-          y: 0.35_f32 * SCREEN_HEIGHT
-        )
-      ),
-      F.create_rectangle(
-        F::Material.new(
-          density: 1.00_f32,
-          friction: 0.35_f32
-        ),
-        F::Broken.pixels_to_units(45.0_f32),
-        F::Broken.pixels_to_units(45.0_f32)
-      )
-    )
+    # box = F.create_body_from_shape(
+    #   F::BodyType::Dynamic,
+    #   F::Broken.vec2_pixels_to_units(
+    #     R::Vector2.new(
+    #       x: 0.5_f32 * SCREEN_WIDTH,
+    #       y: 0.35_f32 * SCREEN_HEIGHT
+    #     )
+    #   ),
+    #   F.create_rectangle(
+    #     F::Material.new(
+    #       density: 1.00_f32,
+    #       friction: 0.35_f32
+    #     ),
+    #     F::Broken.pixels_to_units(45.0_f32),
+    #     F::Broken.pixels_to_units(45.0_f32)
+    #   )
+    # )
 
-    F.add_body_to_world(world, box)
+    # F.add_body_to_world(world, box)
 
     R.init_window(SCREEN_WIDTH, SCREEN_HEIGHT, "basic.c")
     R.set_target_fps(TARGET_FPS)
 
     until R.close_window?
-      puts "1"
-      F.step_world(world, DELTA_TIME)
-      puts "2"
+      puts("Hi")
+      F.update_world(world, DELTA_TIME)
 
       R.begin_drawing
       R.clear_background(R::BLACK)
       R.draw_text("#{R.get_time}", 0, 0, 20, R::WHITE)
-      draw_body_lines(ground, 1.0_f32, R::BLUE)
-      draw_body_lines(box, 1.0_f32, R::RED)
+      # R.draw_text("#{F::Broken.vec2_units_to_pixels(F.get_body_position(box))}", 0, 25, 20, R::WHITE)
+
+      # draw_body_lines(ground, 1.0_f32, R::BLUE)
+      # draw_body_lines(box, 1.0_f32, R::RED)
       R.end_drawing
     end
 
-    F.release_shape(F.get_body_shape(ground))
-    F.release_shape(F.get_body_shape(box))
+    # F.release_shape(F.get_body_shape(ground))
+    # F.release_shape(F.get_body_shape(box))
     F.release_world(world)
 
     R.close_window

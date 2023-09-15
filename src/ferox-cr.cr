@@ -121,14 +121,14 @@ lib Ferox
     second : Body*
   end
 
-  alias CollisionEventFunc = BodyPair, Collision -> Bool
+  alias CollisionEventFunc = BodyPair, Collision* -> Bool
 
   struct CollisionHandler
     pre_step : CollisionEventFunc
     post_step : CollisionEventFunc
   end
 
-  alias RaycastQueryFunc = RaycastHit ->
+  alias RaycastQueryFunc = RaycastHit -> Void
 
   # Broadphase
   fun create_spatial_hash = frCreateSpatialHash(cell_size : LibC::Float) : SpatialHash*
@@ -266,7 +266,7 @@ lib Ferox
     cell_size : LibC::Float
     inverse_cell_size : LibC::Float
     query_result : LibC::Int*
-    entries : SpatialHashEntry
+    entries : SpatialHashEntry*
   end
 
   # collision.c
@@ -316,6 +316,8 @@ lib Ferox
   struct MotionData
     mass : LibC::Float
     inverse_mass : LibC::Float
+    inertia : LibC::Float
+    inverse_inertia : LibC::Float
     gravity_scale : LibC::Float
     velocity : Vector2
     angular_velocity : LibC::Float
@@ -333,7 +335,7 @@ lib Ferox
     ctx : Void*
   end
 
-  fun computer_body_mass = frComputeBodyMass(b : Body*)
+  fun compute_body_mass = frComputeBodyMass(b : Body*)
   fun normalize_angle = frNormalizeAngle(angle : LibC::Float) : LibC::Float
 
   # world.c
@@ -348,8 +350,8 @@ lib Ferox
     hash : SpatialHash*
     cache : ContactCacheEntry*
     handler : CollisionHandler
-    accumulator : LibC::Float
-    timestamp : LibC::Float
+    accumulator : LibC::Double
+    timestamp : LibC::Double
   end
 
   struct PreStepHashQuery
