@@ -239,12 +239,15 @@ lib Ferox
   fun vec2_rotate = frVector2Rotate(v : Vector2, angle : LibC::Float) : Vector2
   fun vec2_rotate_tx = frVector2RotateTx(v : Vector2, tx : Transform) : Vector2
   fun vec2_transform = frVector2Transform(v : Vector2, tx : Transform) : Vector2
-  fun vec2_angle = frVector2Angle(v1 : Vector2, v2 : Vector2) : LibC::Float
   fun vec2_counter_clockwise = frVector2CounterClockwise(v1 : Vector2, v2 : Vector2, v3 : Vector2) : Bool
-  fun vec2_pixels_to_units = frVector2PixelsToUnits(v : Vector2) : Vector2
-  fun vec2_units_to_pixels = frVector2UnitsToPixels(v : Vector2) : Vector2
-  fun pixels_to_units = frPixelsToUnits(value : LibC::Float) : LibC::Float
-  fun units_to_pixels = frUnitsToPixels(value : LibC::Float) : LibC::Float
+
+  # fun vec2_angle = frVector2Angle(v1 : Vector2, v2 : Vector2) : LibC::Float
+  # fun vec2_pixels_to_units = frVector2PixelsToUnits(v : Vector2) : Vector2
+  # fun vec2_units_to_pixels = frVector2UnitsToPixels(v : Vector2) : Vector2
+  # fun pixels_to_units = frPixelsToUnits(value : LibC::Float) : LibC::Float
+  # fun units_to_pixels = frUnitsToPixels(value : LibC::Float) : LibC::Float
+
+
 
   # End of Header
 
@@ -364,4 +367,26 @@ lib Ferox
   fun raycast_hash_query_callback = frRaycastHashQueryCallback(body_index : LibC::Int, ctx : Void*) : Bool
   fun pre_step_world = frPreStepWorld(w : World*)
   fun post_step_world = frPostStepWorld(w : World*)
+end
+
+module Ferox::Broken
+  def self.vec2_angle(v1 : Ferox::Vector2, v2 : Ferox::Vector2) : LibC::Float
+    Math.atan2(v2.y, v2.x) - Math.atan2(v1.y, v1.x)
+  end
+
+  def self.vec2_pixels_to_units(v : Ferox::Vector2) : Ferox::Vector2
+    Ferox.vec2_scalar_multiply(v, 1.0_f32 / Ferox::GEOMETRY_PIXELS_PER_UNIT)
+  end
+
+  def self.vec2_units_to_pixels(v : Ferox::Vector2) : Ferox::Vector2
+    Ferox.vec2_scalar_multiply(v, Ferox::GEOMETRY_PIXELS_PER_UNIT)
+  end
+
+  def self.pixels_to_units(k : Float) : Float
+    k / Ferox::GEOMETRY_PIXELS_PER_UNIT
+  end
+
+  def self.units_to_pixels(k : Float) : Float
+    k * Ferox::GEOMETRY_PIXELS_PER_UNIT
+  end
 end
