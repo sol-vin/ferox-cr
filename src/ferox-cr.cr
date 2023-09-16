@@ -241,11 +241,11 @@ lib Ferox
   fun vec2_transform = frVector2Transform(v : Vector2, tx : Transform) : Vector2
   fun vec2_counter_clockwise = frVector2CounterClockwise(v1 : Vector2, v2 : Vector2, v3 : Vector2) : Bool
 
-  # fun vec2_angle = frVector2Angle(v1 : Vector2, v2 : Vector2) : LibC::Float
-  # fun vec2_pixels_to_units = frVector2PixelsToUnits(v : Vector2) : Vector2
-  # fun vec2_units_to_pixels = frVector2UnitsToPixels(v : Vector2) : Vector2
-  # fun pixels_to_units = frPixelsToUnits(value : LibC::Float) : LibC::Float
-  # fun units_to_pixels = frUnitsToPixels(value : LibC::Float) : LibC::Float
+  fun vec2_angle = frVector2Angle(v1 : Vector2, v2 : Vector2) : LibC::Float
+  fun vec2_pixels_to_units = frVector2PixelsToUnits(v : Vector2) : Vector2
+  fun vec2_units_to_pixels = frVector2UnitsToPixels(v : Vector2) : Vector2
+  fun pixels_to_units = frPixelsToUnits(value : LibC::Float) : LibC::Float
+  fun units_to_pixels = frUnitsToPixels(value : LibC::Float) : LibC::Float
 
 
 
