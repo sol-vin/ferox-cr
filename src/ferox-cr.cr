@@ -33,7 +33,7 @@ lib Ferox
     end
   {% end %}
 
-  alias HashQueryFunc = LibC::Int, Void* -> Bool
+  alias HashQueryFunc = Proc(LibC::Int, Void*, Bool)
 
   struct CollisionCache
     normal_mass : LibC::Float
@@ -121,14 +121,14 @@ lib Ferox
     second : Body*
   end
 
-  alias CollisionEventFunc = BodyPair, Collision* -> Bool
+  alias CollisionEventFunc = Proc(BodyPair, Collision*, Bool)
 
   struct CollisionHandler
     pre_step : CollisionEventFunc
     post_step : CollisionEventFunc
   end
 
-  alias RaycastQueryFunc = RaycastHit -> Void
+  alias RaycastQueryFunc = Proc(RaycastHit, Void)
 
   # Broadphase
   fun create_spatial_hash = frCreateSpatialHash(cell_size : LibC::Float) : SpatialHash*
@@ -246,8 +246,6 @@ lib Ferox
   fun vec2_units_to_pixels = frVector2UnitsToPixels(v : Vector2) : Vector2
   fun pixels_to_units = frPixelsToUnits(value : LibC::Float) : LibC::Float
   fun units_to_pixels = frUnitsToPixels(value : LibC::Float) : LibC::Float
-
-
 
   # End of Header
 
@@ -369,26 +367,4 @@ lib Ferox
   fun raycast_hash_query_callback = frRaycastHashQueryCallback(body_index : LibC::Int, ctx : Void*) : Bool
   fun pre_step_world = frPreStepWorld(w : World*)
   fun post_step_world = frPostStepWorld(w : World*)
-end
-
-module Ferox::Broken
-  def self.vec2_angle(v1 : Ferox::Vector2, v2 : Ferox::Vector2) : LibC::Float
-    Math.atan2(v2.y, v2.x) - Math.atan2(v1.y, v1.x)
-  end
-
-  def self.vec2_pixels_to_units(v : Ferox::Vector2) : Ferox::Vector2
-    Ferox.vec2_scalar_multiply(v, 1.0_f32 / Ferox::GEOMETRY_PIXELS_PER_UNIT)
-  end
-
-  def self.vec2_units_to_pixels(v : Ferox::Vector2) : Ferox::Vector2
-    Ferox.vec2_scalar_multiply(v, Ferox::GEOMETRY_PIXELS_PER_UNIT)
-  end
-
-  def self.pixels_to_units(k : Float) : Float
-    k / Ferox::GEOMETRY_PIXELS_PER_UNIT
-  end
-
-  def self.units_to_pixels(k : Float) : Float
-    k * Ferox::GEOMETRY_PIXELS_PER_UNIT
-  end
 end
