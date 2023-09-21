@@ -112,7 +112,7 @@ lib Ferox
 
   struct Transform
     position : Vector2
-    rotation : LibC::Float
+    rotation : TransformRotation
     angle : LibC::Float
   end
 
